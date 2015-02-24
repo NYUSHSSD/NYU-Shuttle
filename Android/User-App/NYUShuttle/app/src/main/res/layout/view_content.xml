@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/content_text1"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:textColor="@android:color/white"
+        android:gravity="left"
+        android:layout_marginLeft="6dp"/>
+
+    <TextView
+        android:id="@+id/content_text2"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/content_text1"
+        android:gravity="left"
+        android:layout_marginLeft="6dp"/>
+
+    <TextView
+        android:id="@+id/content_text3"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/content_text2"
+        android:gravity="left"
+        android:layout_marginLeft="6dp"/>
+
+
+    <Button
+        android:id="@+id/view_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="20dp"
+        android:layout_below="@id/content_text3"
+        android:textColor="@android:color/white"
+        android:text="View this bus on the map"
+        android:onClick="launchDetailPage"
+        />
+
+    <Button
+        android:id="@+id/choose_shuttle"
+        android:layout_below="@+id/view_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="20dp"
+        android:textColor="@android:color/white"
+        android:text="Edit Favorites"
+        android:onClick="launchAlarmPage"/>
+
+
+
+
+
+</RelativeLayout>

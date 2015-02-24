@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.shanghai.nyushuttle" >
+
+    <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_logo_bus_2"
+        android:label="@string/app_name"
+        android:logo="@drawable/ic_logo_bus_2"
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="pHYRGtiP6ZaRsG6mTzEMOMft" />
+
+
+        <activity
+            android:name=".RouteListActivity"
+            android:label="@string/title_activity_routelist"
+            android:parentActivityName=".Landing" >
+        </activity>
+        <activity
+            android:name=".Landing"
+            android:label="@string/title_activity_landing" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".OneDayViewActivity"
+            android:label="@string/title_activity_one_day_view"
+            android:parentActivityName=".Landing" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.shanghai.nyushuttle.Landing" />
+        </activity>
+        <activity
+            android:name=".AddToScheduleActivity"
+            android:label="@string/title_activity_add_to_schedule"
+            android:noHistory="true">
+        </activity>
+        <activity
+            android:name=".DetailsAndMapActivity"
+            android:label="@string/title_activity_details_and_map_activity"
+            android:noHistory="true">
+        </activity>
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
+
+    </application>
+
+
+
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE"/>
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+</manifest>

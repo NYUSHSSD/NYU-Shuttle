@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html{width: 100%;height: 100%;margin:0;font-family:"????";}
+		#allmap{height:500px;width:100%;}
+		#r-result{width:100%;}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=C5p1EpGiqabMnvBSINGG4zP7"></script>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Live Map</title>
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="container">
+			<!-- Top Navigation -->
+			<header>
+				<h1>NYU Shuttle Bus<em>Command Panel</em> </h1>	
+				<nav class="codrops-demos">
+					<a href="view_routes.html" title="View Routes">View Routes</a>
+					<a href="add_route.html" title="Add a Route">Add a Route</a>
+					<a href="advanced.html" title="Advanced Editing">Advanced Editing</a>
+<a href="live_map.html" title="Live Map">Live Map</a>
+
+				</nav>
+			</header>
+
+
+<div id="bus-location" style="display: none;">
+<?php
+$servername = "db4free.net";
+$username = "nyushbus";
+$password = "busatnyush";
+$dbname = "shnyubus";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT latitude, longitude FROM drivers_location where route='A'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+	echo $row["latitude"];
+	echo "g";
+	echo $row["longitude"]; 
+    }
+} else {
+    echo ":(";
+}
+$conn->close();
+?> 
+</div>
+
+
+
+
+
+
+
+
+
+
+	<div id="allmap"></div>
+	<script type="text/javascript">
+	// ????API??
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(121.544007, 31.231911);
+	map.centerAndZoom(point, 15);
+	
+	var marker = new BMap.Marker(new BMap.Point(121.541163, 31.232451)); // ???
+var marker2 = new BMap.Marker(new BMap.Point(121.545489, 31.236739)); // ???
+
+
+
+	var div = document.getElementById("bus-location");
+    var buscoords = div.textContent.split("g");
+
+var busPoint = new BMap.Point(buscoords[1], buscoords[0]);
+var markerBus = new BMap.Marker(busPoint); 
+	
+	var polyline = new BMap.Polyline([
+		new BMap.Point(121.541163, 31.232451),
+		new BMap.Point(121.542902, 31.231479),
+		new BMap.Point(121.543027, 31.23156),
+		new BMap.Point(121.544007, 31.231911),
+		new BMap.Point(121.544105, 31.231973),
+		new BMap.Point(121.542646, 31.235025),
+		new BMap.Point(121.542996, 31.235203),
+		new BMap.Point(121.545489, 31.236739)
+	], {strokeColor:"blue", strokeWeight:2, strokeOpacity:0.5});   //????
+	
+		
+
+	function add_overlay(){
+		map.addOverlay(marker);            
+		map.addOverlay(marker2);
+		map.addOverlay(markerBus);            
+		map.addOverlay(polyline);          
+	}
+
+	function remove_overlay(){
+		map.clearOverlays();         
+	}
+
+	add_overlay();
+
+
+	var finalPoint;
+BMap.Convertor.translate(busPoint,0,finalPoint);     
+	var markerBus2 = new BMap.Marker(finalPoint);
+	map.addOverlay(markerBus2);
+	map.setCenter(finalPoint);
+
+
+
+
+</script>
+
+		
+
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+		<script src="js/jquery.stickyheader.js"></script>
+</div>
+</body>
+</html>
+

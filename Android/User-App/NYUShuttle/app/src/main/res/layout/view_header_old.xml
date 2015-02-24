@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/header_departure"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:padding="4dp"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:text="08:00"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+/>
+
+    <TextView
+        android:id="@+id/header_from"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:padding="4dp"
+        android:textColor="@android:color/white"
+        android:background="#ff57068c"
+        android:text="Academic B"
+        android:gravity="center"
+        android:layout_toRightOf="@id/header_departure"
+       />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text=" "
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/header_arrival"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:padding="4dp"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:text="10:00"
+        android:gravity="center"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/header_to"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:padding="4dp"
+        android:textColor="@android:color/white"
+        android:background="#ff57068c"
+        android:text="Motel 268"
+        android:gravity="center"
+        android:layout_toLeftOf="@id/header_arrival"
+    />
+
+
+
+</RelativeLayout>
