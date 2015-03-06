@@ -60,10 +60,11 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
     String[] landingText_array = {"", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:"};
     String landing_text = "";
     public String day_selected = "";
-
+    public static String host_name = "http://high-voltage.hostoi.com";
+    public int chosen_host_name = 0;
     public SharedPreferences sharedPref;
 
-    public String self_defined_version = "usr1.10";
+    public String self_defined_version = "usr1.12";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
 
         URL url = null;
         try {
-            url = new URL("http://nyushapp.comli.com/shuttle/get_version.php");
+            url = new URL(host_name + "/shuttle/get_version.php");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -297,7 +298,7 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
             try {
                 //set the download URL, a url that points to a file on the internet
                 //this is the file to be downloaded
-                URL url = new URL("http://nyushapp.comli.com/shuttle/update/nyushuttle_update.apk");
+                URL url = new URL(host_name + "/shuttle/update/nyushuttle_update.apk");
 
                 //create the new connection
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -446,7 +447,7 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
 
         URL url = null;
         try {
-            url = new URL("http://nyushapp.comli.com/shuttle/select_all.php");
+            url = new URL(host_name + "/shuttle/select_all.php");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

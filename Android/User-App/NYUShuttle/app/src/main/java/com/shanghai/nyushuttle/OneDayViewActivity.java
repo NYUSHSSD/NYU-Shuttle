@@ -251,7 +251,7 @@ public class OneDayViewActivity extends Activity implements AdapterView.OnItemSe
 
         URL url = null;
         try {
-            url = new URL("http://nyushapp.comli.com/shuttle/select_all.php");
+            url = new URL(Landing.host_name + "/shuttle/select_all.php");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

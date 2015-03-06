@@ -62,7 +62,6 @@ public class DetailsAndMapActivity extends Activity {
     private Marker mMarkerC;
     private Marker mMarkerD;
     private Polyline mPolyA;
-
     BitmapDescriptor bdMapMarker;
     BitmapDescriptor bdBus;
     BitmapDescriptor bdStudent;
@@ -141,7 +140,7 @@ public class DetailsAndMapActivity extends Activity {
 
 
         try {
-            url = new URL("http://nyushapp.comli.com/shuttle/get_bus_location.php");
+            url = new URL(Landing.host_name + "/shuttle/get_bus_location.php");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -151,10 +150,15 @@ public class DetailsAndMapActivity extends Activity {
 
         Intent intent = getIntent();
         String route_details = intent.getStringExtra("com.shanghai.nyushuttle.ROUTE_DETAIL");
+        Log.w("alex-logg",route_details);
         TextView route_detail_tv = (TextView) findViewById(R.id.route_detail_tv);
         route_detail_tv.setText(route_details);
-        if (route_details.contains("A"))
+        if (route_details.contains("A-"))
             route_name = "A";
+        else if (route_details.contains("B-"))
+            route_name = "B";
+        else if (route_details.contains("C-"))
+            route_name = "B"; //ATTENTION! This is temporary, since there is only 1 bus for B and C
 
         // åˆå§‹åŒ–åœ°å›¾ Initialise Map
         mMapView = (MapView) findViewById(R.id.bmapView);
@@ -200,6 +204,118 @@ public class DetailsAndMapActivity extends Activity {
             OverlayOptions ooA = new MarkerOptions().position(ll0).icon(bdMapMarker);
             mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
             OverlayOptions ooB = new MarkerOptions().position(ll7).icon(bdMapMarker);
+            mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
+            ooC = new MarkerOptions().position(llBus).icon(bdBus);
+            mMarkerC = (Marker) (mBaiduMap.addOverlay(ooC));
+
+
+        }
+
+        else if (route_name == "B") {
+            LatLng ll0 = new LatLng(31.232794,121.54058);
+            LatLng ll1 = new LatLng(31.233115,121.539974);
+            LatLng ll2 = new LatLng(31.232532,121.539516);
+            LatLng ll3 = new LatLng(31.231775,121.538936);
+            LatLng ll4 = new LatLng(31.230116,121.541887);
+            LatLng ll5 = new LatLng(31.229988,121.541784);
+            LatLng ll6 = new LatLng(31.228437,121.544537);
+            LatLng ll7 = new LatLng(31.227545,121.543792);
+            LatLng ll8 = new LatLng(31.227545,121.543792);
+            LatLng ll9 = new LatLng(31.226846,121.543244);
+            LatLng ll10 = new LatLng(31.225542,121.54275);
+            LatLng ll11 = new LatLng(31.224388,121.542354);
+            LatLng ll12 = new LatLng(31.221948,121.541371);
+            LatLng ll13 = new LatLng(31.220632,121.540872);
+            LatLng ll14 = new LatLng(31.218925,121.540221);
+            LatLng ll15 = new LatLng(31.217123,121.539507);
+            LatLng ll16 = new LatLng(31.216235,121.539116);
+            LatLng ll17 = new LatLng(31.216,121.539062);
+            LatLng ll18 = new LatLng(31.215783,121.538815);
+            LatLng ll19 = new LatLng(31.215165,121.538554);
+            LatLng ll20 = new LatLng(31.214594,121.538321);
+
+            southwest = ll0;
+            northeast = ll20;
+            llBus = ll0;
+
+            my_points.add(ll0);
+            my_points.add(ll1);
+            my_points.add(ll2);
+            my_points.add(ll3);
+            my_points.add(ll4);
+            my_points.add(ll5);
+            my_points.add(ll6);
+            my_points.add(ll7);
+            my_points.add(ll8);
+            my_points.add(ll9);
+            my_points.add(ll10);
+            my_points.add(ll11);
+            my_points.add(ll12);
+            my_points.add(ll13);
+            my_points.add(ll14);
+            my_points.add(ll15);
+            my_points.add(ll16);
+            my_points.add(ll17);
+            my_points.add(ll18);
+            my_points.add(ll19);
+            my_points.add(ll20);
+
+            OverlayOptions ooA = new MarkerOptions().position(ll0).icon(bdMapMarker);
+            mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
+            OverlayOptions ooB = new MarkerOptions().position(ll20).icon(bdMapMarker);
+            mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
+            ooC = new MarkerOptions().position(llBus).icon(bdBus);
+            mMarkerC = (Marker) (mBaiduMap.addOverlay(ooC));
+
+
+        }
+
+        else if (route_name == "C") {
+            LatLng ll0 = new LatLng(31.213868,121.536973);
+            LatLng ll1 = new LatLng(31.213969,121.532437);
+            LatLng ll2 = new LatLng(31.214424,121.532671);
+            LatLng ll3 = new LatLng(31.216779,121.533955);
+            LatLng ll4 = new LatLng(31.218501,121.53488);
+            LatLng ll5 = new LatLng(31.219149,121.535159);
+            LatLng ll6 = new LatLng(31.220578,121.535689);
+            LatLng ll7 = new LatLng(31.222477,121.535985);
+            LatLng ll8 = new LatLng(31.22504,121.535824);
+            LatLng ll9 = new LatLng(31.2267,121.535312);
+            LatLng ll10 = new LatLng(31.227379,121.537099);
+            LatLng ll11 = new LatLng(31.228506,121.540198);
+            LatLng ll12 = new LatLng(31.228838,121.540701);
+            LatLng ll13 = new LatLng(31.229475,121.541375);
+            LatLng ll14 = new LatLng(31.230131,121.541878);
+            LatLng ll15 = new LatLng(31.231787,121.538945);
+            LatLng ll16 = new LatLng(31.233111,121.539974);
+            LatLng ll17 = new LatLng(31.232802,121.540558);
+
+            southwest = ll0;
+            northeast = ll17;
+            llBus = ll0;
+
+            my_points.add(ll0);
+            my_points.add(ll1);
+            my_points.add(ll2);
+            my_points.add(ll3);
+            my_points.add(ll4);
+            my_points.add(ll5);
+            my_points.add(ll6);
+            my_points.add(ll7);
+            my_points.add(ll8);
+            my_points.add(ll9);
+            my_points.add(ll10);
+            my_points.add(ll11);
+            my_points.add(ll12);
+            my_points.add(ll13);
+            my_points.add(ll14);
+            my_points.add(ll15);
+            my_points.add(ll16);
+            my_points.add(ll17);
+
+            OverlayOptions ooA = new MarkerOptions().position(ll0).icon(bdMapMarker);
+            mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
+            OverlayOptions ooB = new MarkerOptions().position(ll17).icon(bdMapMarker);
             mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
             ooC = new MarkerOptions().position(llBus).icon(bdBus);
             mMarkerC = (Marker) (mBaiduMap.addOverlay(ooC));

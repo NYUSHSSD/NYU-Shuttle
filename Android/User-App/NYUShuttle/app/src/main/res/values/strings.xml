@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">NYU Shuttle</string>
+    <string name="app_name">NYU SHuttle</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_landing">NYU SHuttle Bus</string>
+    <string name="title_activity_landing">NYU SHuttle</string>
     <string name="title_activity_routelist">All Routes</string>
     <string name="title_activity_one_day_view">Daily Schedule</string>
     <string name="title_activity_add_to_schedule">Edit Favorites</string>

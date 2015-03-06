@@ -37,7 +37,6 @@ public class RouteListActivity extends Activity {
 
     public final static String ROUTE_DETAIL = "com.shanghai.nyushuttle.ROUTE_DETAIL";
     public final static String SCHEDULE_DETAIL = "com.shanghai.nyushuttle.SCHEDULE_DETAIL";
-
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +44,7 @@ public class RouteListActivity extends Activity {
 
          URL url = null;
          try {
-             url = new URL("http://nyushapp.comli.com/shuttle/select_all.php");
+             url = new URL(Landing.host_name + "/shuttle/select_all.php");
          } catch (MalformedURLException e) {
              e.printStackTrace();
          }
