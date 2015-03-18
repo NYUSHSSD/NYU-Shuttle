@@ -23,6 +23,36 @@
 		<![endif]-->
 
 
+<style>
+#wrapper {
+    position: relative;
+}
+#wrapper .legend {
+    position: absolute;
+    top: 0;
+    right: 40px;
+    z-index: 999;
+    list-style: none;
+    background: white;
+    padding: 10px 8px;
+}
+#wrapper .legend li {
+    padding: 8px 5px;
+}
+
+#wrapper .legend li span {
+    width: 30px;
+    height: 18px;
+    display: inline-block;
+    margin-right: 6px;
+}
+#wrapper .legend li span.purple {
+    background-color: purple;
+}
+#wrapper .legend li span.blue {
+    background-color: blue;
+}
+</style>
 
 
 <script>
@@ -38,11 +68,6 @@ function ajaxGetBusLocation() {
     }
 
 </script>
-
-
-
-
-
 
 	</head>
 	<body>
@@ -61,6 +86,11 @@ function ajaxGetBusLocation() {
 
 
 <script>
+
+var infoWindow1_status = 0;
+var infoWindow2_status = 0;
+var infoWindow3_status = 0;
+
 function jsfocusAB()
 {
 	var point = new BMap.Point(121.541163, 31.232451);
@@ -102,6 +132,7 @@ function jsfocusbus2()
 
 <div id="txtHint" style="display: none;"></div>
 
+<!--
 <b>Go to a place: </b>
 <input id="ABfocus" type="button" value="Academic Building" onclick="jsfocusAB();" />
 <input id="268focus" type="button" value="Motel 268" onclick="jsfocus268();" />
@@ -110,21 +141,37 @@ function jsfocusbus2()
 <b>Find a bus: </b>
 <input id="bus1focus" type="button" value="Route A - Bus 1" onclick="jsfocusbus1();" />
 <input id="bus2focus" type="button" value="Route B/C - Bus 1" onclick="jsfocusbus2();" />
+-->
 
 
 
 
 
-	<div id="allmap"></div>
+    <div id="wrapper">
+        <ul class="legend">
+            <li>
+                <span class="purple">&nbsp;</span><a href="#" onclick="jsfocusbus1();">Route A</a>
+ - <a href="#" onclick="jsfocusAB();">Academic Building</a> to <a href="#" onclick="jsfocus268();">Motel 268</a>
+            </li>
+            <li>
+                <span class="blue">&nbsp;</span><a href="#" onclick="jsfocusbus2();">Route B</a> - <a href="#" onclick="jsfocusAB();">Academic Building</a> to <a href="#" onclick="jsfocusGP();">Grand Pujian</a>
+            </li>
+            <li>
+                <span class="blue">&nbsp;</span><a href="#" onclick="jsfocusbus2();">Route C</a> - <a href="#" onclick="jsfocusGP();">Grand Pujian</a> to <a href="#" onclick="jsfocusAB();">Academic Building</a>
+            </li>
+        </ul>
+        <div id="allmap"></div>
+    </div>
+
 	<script type="text/javascript">
 	// ????API??
 	var map = new BMap.Map("allmap");
 	var point = new BMap.Point(121.544007, 31.231911);
 	map.centerAndZoom(point, 15);
 	
-var purpleIcon = new BMap.Icon("http://nyushapp.comli.com/shuttle/map_marker.png", new BMap.Size(22,22));
+var purpleIcon = new BMap.Icon("map_marker.png", new BMap.Size(22,22));
 
-var busIcon = new BMap.Icon("http://nyushapp.comli.com/shuttle/busIcon.png", new BMap.Size(25,25));
+var busIcon = new BMap.Icon("busIcon.png", new BMap.Size(25,25));
 
 var markerBus = new BMap.Marker(new BMap.Point(0,0),{icon:busIcon});
 
@@ -134,6 +181,21 @@ var markerBus2 = new BMap.Marker(new BMap.Point(0,0),{icon:busIcon});
 	var marker = new BMap.Marker(new BMap.Point(121.541163, 31.232451),{icon:purpleIcon});
 var marker2 = new BMap.Marker(new BMap.Point(121.545489, 31.236739),{icon:purpleIcon}); 
 var marker3 = new BMap.Marker(new BMap.Point(121.538321,31.214594),{icon:purpleIcon}); 
+
+var IWoptions = { width : 300, height : 180 }
+
+    var infoWindows = [
+        new BMap.InfoWindow(generateMakerInfoWindowContent("Academic Building", "nyu.jpg", "NYU Shanghai exemplifies the highest ideals of contemporary higher education by uniting the intellectual resources of New York University’s global network with the multidimensional richness of China."),IWoptions),
+        new BMap.InfoWindow(generateMakerInfoWindowContent("Motel 268", "268.jpg", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "),IWoptions),
+        new BMap.InfoWindow(generateMakerInfoWindowContent("Grand Pujian", "GPJ.jpg", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "),IWoptions)
+    ];
+
+    // cache all the images, so that the info window will have the right height
+    var cachedImages = [
+        new Image('nyu.jpg'),
+        new Image('268.jpg'),
+        new Image('GPJ.jpg')
+    ];
 
 var busPoint;
 var busPoint2;
@@ -216,47 +278,65 @@ new BMap.Point(121.540558,31.232802)
 	add_overlay();
 
 
+    function generateMakerInfoWindowContent(title, image, description) {
+        return "<h4 style='margin:0 0 5px 0;padding:0.2em 0'>" + title + "</h4>" + 
+            "<img style='float:left;margin:4px 8px 4px 0' src='" + image + "' width='139' height='104' title='" + title + "'/>" + 
+            "<p style='margin:0;line-height:1.5;font-size:13px;'>" + description + "</p>" + 
+            "</div>";
+    }
 
-marker.addEventListener("click",displaylabel1);
-	function displaylabel1(){
-if (marker.getLabel()==null)
-{
-var label = new BMap.Label("<big><b>Academic Building</b></big>",{offset:new BMap.Size(20,-10)});
-marker.setLabel(label);
-}
-else
-{
-marker.getLabel().remove();
-}			
-	}
-marker2.addEventListener("click",displaylabel2);
-	function displaylabel2(){
-if (marker2.getLabel()==null)
-{
-var label2 = new BMap.Label("<big><b>Motel 268</b></big>",{offset:new BMap.Size(20,-10)});
-		marker2.setLabel(label2); 
-}
-else
-{
-marker2.getLabel().remove();
-}			
 
+
+function displaylabel1()
+{
+	if (infoWindow1_status == 0)
+	{
+		marker.openInfoWindow(infoWindows[0]);
+		infoWindow1_status = 1;
 	}
+	else
+	{ 
+		marker.closeInfoWindow();
+		infoWindow1_status = 0;
+	}
+}
+function displaylabel2()
+{
+	if (infoWindow2_status == 0)
+	{
+		marker2.openInfoWindow(infoWindows[1]);
+		infoWindow2_status = 1;
+	}
+	else
+	{ 
+		marker2.closeInfoWindow();
+		infoWindow2_status = 0;
+	}
+}
+function displaylabel3()
+{
+	if (infoWindow3_status == 0)
+	{
+		marker3.openInfoWindow(infoWindows[2]);
+		infoWindow3_status = 1;
+	}
+	else
+	{ 
+		marker3.closeInfoWindow();
+		infoWindow3_status = 0;
+	}
+}
+
+
+
+marker.addEventListener("click", displaylabel1);
+marker2.addEventListener("click", displaylabel2);
+marker3.addEventListener("click", displaylabel3);
+
+
+
 map.enableScrollWheelZoom();   
 map.enableContinuousZoom();    
-marker3.addEventListener("click",displaylabel3);
-function displaylabel3(){
-if (marker3.getLabel()==null)
-{
-var label3 = new BMap.Label("<big><b>Grand Pujian</b></big>",{offset:new BMap.Size(20,-10)});
-marker3.setLabel(label3); 
-}
-else
-{
-marker3.getLabel().remove();
-}			
-			
-	}
 
 markerBus.addEventListener("click",displaylabelBus);
 function displaylabelBus(){

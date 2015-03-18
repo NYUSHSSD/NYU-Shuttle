@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.shanghai.nyushuttle" >
 
-    <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +14,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="pHYRGtiP6ZaRsG6mTzEMOMft" />
+            android:value="Kmz32d67l3FBmqAGpUstnGxg" />
 
 
         <activity

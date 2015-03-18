@@ -60,11 +60,11 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
     String[] landingText_array = {"", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:"};
     String landing_text = "";
     public String day_selected = "";
-    public static String host_name = "http://high-voltage.hostoi.com";
+    public static String host_name = "http://nyushuttle.lixter.com";
     public int chosen_host_name = 0;
     public SharedPreferences sharedPref;
 
-    public String self_defined_version = "usr1.12";
+    public String self_defined_version = "usr1.13";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

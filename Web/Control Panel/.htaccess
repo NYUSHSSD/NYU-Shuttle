@@ -1,3 +1,3 @@
 # Do not remove this line, otherwise mod_rewrite rules will stop working
 RewriteBase /
-Redirect /index.html http://nyushapp.comli.com/shuttle/
+Redirect /index.html /shuttle/

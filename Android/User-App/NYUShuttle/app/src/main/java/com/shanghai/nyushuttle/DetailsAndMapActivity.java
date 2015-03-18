@@ -479,6 +479,13 @@ public class DetailsAndMapActivity extends Activity {
         super.onBackPressed();
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (!hasFocus) {
+            getLocTask.cancel(true);
+        }
+    }
 
 
 }
