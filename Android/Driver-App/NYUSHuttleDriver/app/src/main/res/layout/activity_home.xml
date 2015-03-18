@@ -1,0 +1,142 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity"
+    android:orientation="vertical">
+
+   <Spinner
+       android:id="@+id/spinner"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:background="#ff57068c"
+       android:layout_gravity="center"
+       android:textAlignment="center"
+       />
+
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#d11255">
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="@string/latitude"
+            android:background="#d11255"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="#ffffffff"
+            android:paddingLeft="10dp" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="-"
+            android:background="#d11255"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="#ffffffff"
+            android:paddingLeft="10dp">
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d11255">
+
+        <TextView
+            android:id="@+id/TextView03"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="@string/longitude"
+            android:background="#d11255"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="#ffffffff"
+            android:paddingLeft="10dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/TextView04"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="-"
+            android:background="#d11255"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="#ffffffff"
+            android:paddingLeft="10dp" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d11255">
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="@string/current_status"
+            android:background="#d11255"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="#ffffffff"
+            android:paddingLeft="10dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/TextView06"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="@string/stopped"
+            android:background="#d11255"
+            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:textColor="#ffffffff"
+            android:paddingLeft="10dp" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:gravity="bottom">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ff57068c"
+            android:text="@string/start"
+            android:textColor="#ffffff"
+            android:onClick="startRoute"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#d11255"
+            android:text="@string/stop"
+            android:onClick="finishRoute"/>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
