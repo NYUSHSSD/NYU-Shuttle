@@ -23,6 +23,11 @@
             android:parentActivityName=".Landing" >
         </activity>
         <activity
+            android:name=".SettingsActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName=".Landing" >
+        </activity>
+        <activity
             android:name=".Landing"
             android:label="@string/title_activity_landing" >
             <intent-filter>

@@ -158,7 +158,7 @@ public class DetailsAndMapActivity extends Activity {
         else if (route_details.contains("B-"))
             route_name = "B";
         else if (route_details.contains("C-"))
-            route_name = "B"; //ATTENTION! This is temporary, since there is only 1 bus for B and C
+            route_name = "C"; //ATTENTION! This is temporary, since there is only 1 bus for B and C
 
         // åˆå§‹åŒ–åœ°å›¾ Initialise Map
         mMapView = (MapView) findViewById(R.id.bmapView);

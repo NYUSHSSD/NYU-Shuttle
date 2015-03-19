@@ -67,22 +67,26 @@ function ajaxGetBusLocation() {
         xmlhttp.send();
     }
 
+function ajaxGetDriverInfo() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("txtHint2").innerHTML = xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", "get_driver.php", true);
+        xmlhttp.send();
+    }
+
 </script>
 
 	</head>
 	<body>
 		<div class="container">
 			<!-- Top Navigation -->
-			<header>
-				<h1>NYU Shuttle Bus<em>Command Panel</em> </h1>	
-				<nav class="codrops-demos">
-					<a href="view_routes.html" title="View Routes">View Routes</a>
-					<a href="add_route.html" title="Add a Route">Add a Route</a>
-					<a href="advanced.html" title="Advanced Editing">Advanced Editing</a>
-<a href="live_map.html" title="Live Map">Live Map</a>
-
-				</nav>
-			</header>
+<?php
+	include "navigation.php";
+?>
 
 
 <script>
@@ -90,6 +94,13 @@ function ajaxGetBusLocation() {
 var infoWindow1_status = 0;
 var infoWindow2_status = 0;
 var infoWindow3_status = 0;
+
+var driver_name1 = "John Smith";
+var driver_phone1 = "0000000000"
+var driver_name2 = "Mike Johnson";
+var driver_phone2 = "0000000000"
+
+
 
 function jsfocusAB()
 {
@@ -131,7 +142,7 @@ function jsfocusbus2()
 </script>
 
 <div id="txtHint" style="display: none;"></div>
-
+<div id="txtHint2" style="display: none;"></div>
 <!--
 <b>Go to a place: </b>
 <input id="ABfocus" type="button" value="Academic Building" onclick="jsfocusAB();" />
@@ -140,7 +151,7 @@ function jsfocusbus2()
 <BR>
 <b>Find a bus: </b>
 <input id="bus1focus" type="button" value="Route A - Bus 1" onclick="jsfocusbus1();" />
-<input id="bus2focus" type="button" value="Route B/C - Bus 1" onclick="jsfocusbus2();" />
+<input id="bus2focus" type="button" value="Route BC - Bus 1" onclick="jsfocusbus2();" />
 -->
 
 
@@ -201,6 +212,7 @@ var busPoint;
 var busPoint2;
 
 	var divv = document.getElementById("txtHint");
+	var divv2 = document.getElementById("txtHint2");
     
 	
 	var polyline = new BMap.Polyline([
@@ -342,7 +354,7 @@ markerBus.addEventListener("click",displaylabelBus);
 function displaylabelBus(){
 if (markerBus.getLabel()==null)
 {
-var labelBus = new BMap.Label("<b>Route A</b> - Bus 1<BR> <b>License Plate:</b> [DD9837]<BR><b>Driver:</b> John Smith",{offset:new BMap.Size(20,-10)});
+var labelBus = new BMap.Label("<b>Route A</b> - Bus 1<BR><b>Driver:</b> " + driver_name1 + "<BR><b>Phone:</b> " + driver_phone1,{offset:new BMap.Size(20,-10)});
 markerBus.setLabel(labelBus); 
 }
 else
@@ -356,7 +368,7 @@ markerBus2.addEventListener("click",displaylabelBus2);
 function displaylabelBus2(){
 if (markerBus2.getLabel()==null)
 {
-var labelBus2 = new BMap.Label("<b>Route B/C</b> - Bus 1<BR> <b>License Plate:</b> [DD2231]<BR><b>Driver:</b> Tom Jones",{offset:new BMap.Size(20,-10)});
+var labelBus2 = new BMap.Label("<b>Route BC</b> - Bus 1<BR> <b>Driver:</b> " + driver_name2 + "<BR><b>Phone:</b> " + driver_phone2,{offset:new BMap.Size(20,-10)});
 markerBus2.setLabel(labelBus2); 
 }
 else
@@ -409,6 +421,33 @@ if (ok2==1)
 
 	BMap.Convertor.translate(busPoint,0,translateCallback); 
 	BMap.Convertor.translate(busPoint2,0,translateCallback2);         	}, 3000);
+
+
+
+function updateDriverDetails()
+{
+	ajaxGetDriverInfo();
+	var driversInfo = divv2.textContent.split("#",5); 
+	driver_name1 = driversInfo[1];
+	driver_phone1 = driversInfo[2];
+	driver_name2 = driversInfo[3];
+	driver_phone2 = driversInfo[4];
+
+}
+
+var counterUpd = 0;
+
+var drvInt = setInterval(function(){ 
+	updateDriverDetails();
+	counterUpd++;
+}, 3000);
+
+if (counterUpd >=5){
+	clearInterval(drvInt);}
+
+setInterval(function(){ 
+	updateDriverDetails();
+}, 300000);
 
 
 

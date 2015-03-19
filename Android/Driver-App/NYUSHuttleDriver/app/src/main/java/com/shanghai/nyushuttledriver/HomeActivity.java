@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -15,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -24,6 +27,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,29 +62,41 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
     private LocationManager locationManager;
     public String selected_route = "none";
     public int route_started = 0;
-    public String self_defined_version = "drv1.13";
+    public String self_defined_version = "drv1.14";
+    public static String backup_host_name = "http://nyushuttle.lixter.com";
     public static String host_name = "http://nyushuttle.lixter.com";
     public String AndroidDeviceId ="noID";
     PowerManager powerManager;
     PowerManager.WakeLock wakeLock;
+    LinearLayout ll1,ll2,ll3;
+    TextView tv06;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String newServer = sharedPref.getString("pref_server","http://nyushuttle.lixter.com");
+        Log.w("new-server",newServer);
+        host_name = newServer;
+
         URL url = null;
         try {
             url = new URL(host_name + "/shuttle/get_version.php");
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("pref_server", backup_host_name);
+            editor.commit();
+            super.finish();
         }
 
         if (internetConnected())
             new getVersionFromDB(this).execute(url);
         else
         {
-            Toast.makeText(this,"No internet connection :(",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.no_internet,Toast.LENGTH_LONG).show();
             super.finish();
         }
 
@@ -129,9 +145,13 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
             System.out.println("Provider " + provider + " has been selected.");
             onLocationChanged(location);
         } else {
-            latituteField.setText("Location not available");
-            longitudeField.setText("Location not available");
+            latituteField.setText(R.string.location_not_av);
+            longitudeField.setText(R.string.location_not_av);
         }
+        ll1 = (LinearLayout) findViewById(R.id.linearLayout1);
+        ll2 = (LinearLayout) findViewById(R.id.linearLayout2);
+        ll3 = (LinearLayout) findViewById(R.id.linearLayout3);
+        tv06 = (TextView) findViewById(R.id.TextView06);
     }
     protected void onResume() {
         super.onResume();
@@ -151,8 +171,12 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
             wakeLock.acquire();
             new UpdateLogs(this).execute("started", selected_route, AndroidDeviceId, "01");
             route_started = 1;
-            TextView someView = (TextView) findViewById(R.id.TextView06);
-            someView.setText(R.string.started);
+            ll1.setBackgroundColor(Color.parseColor("#ff57068c"));
+            ll2.setBackgroundColor(Color.parseColor("#ff57068c"));
+            ll3.setBackgroundColor(Color.parseColor("#ff57068c"));
+
+            tv06.setText(R.string.started);
+            Toast.makeText(this,R.string.started,Toast.LENGTH_LONG).show();
         }
         else
         {
@@ -163,8 +187,11 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
     public void finishRoute(View view) {
         new UpdateLogs(this).execute("stopped", selected_route, AndroidDeviceId, "01");
         route_started = 0;
-        TextView someView = (TextView) findViewById(R.id.TextView06);
-        someView.setText(R.string.stopped);
+        ll1.setBackgroundColor(Color.parseColor("#d11255"));
+        ll2.setBackgroundColor(Color.parseColor("#d11255"));
+        ll3.setBackgroundColor(Color.parseColor("#d11255"));
+        tv06.setText(R.string.stopped);
+        Toast.makeText(this,R.string.stopped,Toast.LENGTH_LONG).show();
         if (wakeLock.isHeld())
             wakeLock.release();
     }
@@ -227,6 +254,7 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
         }
 
         protected void onPostExecute(String result) {
+            Log.w("successornot","|" + result + "|");
             File SDCardRoot = Environment.getExternalStorageDirectory();
             String apkfile = "file:///" + SDCardRoot.getAbsolutePath() + "/nyushuttledriver_update.apk";
             Intent promptInstall = new Intent(Intent.ACTION_VIEW)
@@ -299,7 +327,16 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
             //Yet to code
         }
         protected void onPostExecute(String result) {
-            if (result.contains(self_defined_version))
+            if (result==null)
+            {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("pref_server", backup_host_name);
+                editor.commit();
+                HomeActivity.this.finish();
+                Log.w("diee","here I die");
+            }
+            else if (result.contains(self_defined_version))
             {
                 Toast.makeText(HomeActivity.this,R.string.up_to_date,Toast.LENGTH_LONG).show();
             }
@@ -368,10 +405,10 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            //case R.id.action_settings:
-                //Intent intent = new Intent(this, SettingsActivity.class);
-                //startActivity(intent);
-                //return true;
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -386,11 +423,14 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
                 selected_route = "A";
                 Log.w("alex-log", "Selected A");
             } else if (position == 2) {
-                selected_route = "B";
-                Log.w("alex-log", "Selected B");
-            } else if (position == 3) {
-                selected_route = "C";
-                Log.w("alex-log", "Selected C");
+                selected_route = "BC";
+                Log.w("alex-log", "Selected BC");
+       //     } else if (position == 2) {
+        //        selected_route = "B";
+        //        Log.w("alex-log", "Selected B");
+        //    } else if (position == 3) {
+        //        selected_route = "C";
+        //        Log.w("alex-log", "Selected C");
             }
         //TODO: What if the driver changes the route while driving?
     }

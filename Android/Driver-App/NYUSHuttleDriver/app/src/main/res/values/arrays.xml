@@ -3,7 +3,6 @@
     <string-array name="routes_array" translatable="false">
         <item>@string/select_route</item>
         <item>@string/route_a</item>
-        <item>@string/route_b</item>
-        <item>@string/route_c</item>
+        <item>@string/route_bc</item>
     </string-array>
 </resources>

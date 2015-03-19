@@ -18,4 +18,7 @@
     <string name="route_b">路线B: 浦建雅居 - 教学楼 </string>
     <string name="route_c">路线C: 教学楼 - 浦建雅居 </string>
     <string name="up_to_date">已经是最新版本!</string>
+    <string name="route_bc">路线BC: 教学楼 = 浦建雅居</string>
+    <string name="location_not_av">暂时无法获取位置信息</string>
+    <string name="no_internet">没有互联网连接</string>
 </resources>

@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -61,10 +62,11 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
     String landing_text = "";
     public String day_selected = "";
     public static String host_name = "http://nyushuttle.lixter.com";
+    public static String backup_host_name = "http://nyushuttle.lixter.com";
     public int chosen_host_name = 0;
     public SharedPreferences sharedPref;
 
-    public String self_defined_version = "usr1.13";
+    public String self_defined_version = "usr1.14";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +75,18 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
 
         sharedPref = getDefaultSharedPreferences(getApplication());
 
+        String newServer = sharedPref.getString("pref_server","http://nyushuttle.lixter.com");
+        Log.w("new-server",newServer);
+        host_name = newServer;
+
         URL url = null;
         try {
             url = new URL(host_name + "/shuttle/get_version.php");
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("pref_server", backup_host_name);
+            editor.commit();
+            super.finish();
         }
 
         if (internetConnected())
@@ -421,11 +430,21 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
             //Yet to code
         }
         protected void onPostExecute(String result) {
-
+            if (result==null)
+            {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(Landing.this);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("pref_server", backup_host_name);
+                editor.commit();
+                Landing.this.finish();
+                Log.w("diee","here I die");
+            }
+            else
             if (result.contains(self_defined_version)) {
                 Toast.makeText(Landing.this, "Up to date!", Toast.LENGTH_LONG).show();
             }
             else {
+                Log.w("outdated",result);
                 Toast.makeText(Landing.this, "Application outdated. Downloading current version...", Toast.LENGTH_LONG).show();
                 new SelfUpdate().execute("up");
             }
@@ -496,7 +515,11 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
             startActivity(intent);
         }
 
-
+        else if (id == R.id.action_settings)
+        {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
