@@ -29,6 +29,13 @@
             android:label="@string/action_settings" >
         </activity>
 
+        <receiver android:name="com.shanghai.nyushuttledriver.AlarmReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="Alarm" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

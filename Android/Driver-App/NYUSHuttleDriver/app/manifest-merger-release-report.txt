@@ -74,6 +74,18 @@ ADDED from AndroidManifest.xml:27:9
 		ADDED from AndroidManifest.xml:29:13
 	android:name
 		ADDED from AndroidManifest.xml:28:13
+receiver#com.shanghai.nyushuttledriver.AlarmReceiver
+ADDED from AndroidManifest.xml:32:9
+	android:enabled
+		ADDED from AndroidManifest.xml:33:13
+	android:name
+		ADDED from AndroidManifest.xml:32:19
+intent-filter#Alarm
+ADDED from AndroidManifest.xml:34:13
+action#Alarm
+ADDED from AndroidManifest.xml:35:17
+	android:name
+		ADDED from AndroidManifest.xml:35:25
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:support-v4:21.0.2:15:5

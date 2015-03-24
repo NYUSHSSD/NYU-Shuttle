@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -61,21 +63,33 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
     String[] landingText_array = {"", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:", "My favorites for:"};
     String landing_text = "";
     public String day_selected = "";
-    public static String host_name = "http://nyushuttle.lixter.com";
-    public static String backup_host_name = "http://nyushuttle.lixter.com";
+    public static String host_name = "http://high-voltage.hostoi.com";
+    public static String backup_host_name = "http://high-voltage.hostoi.com";
     public int chosen_host_name = 0;
     public SharedPreferences sharedPref;
+    public SharedPreferences sharedPref2;
 
-    public String self_defined_version = "usr1.14";
+    public String self_defined_version = "usr1.15";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
-        sharedPref = getDefaultSharedPreferences(getApplication());
+// NOT SURE IF THIS SHOULD BE HERE AT ALL!
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
-        String newServer = sharedPref.getString("pref_server","http://nyushuttle.lixter.com");
+       /////////////////////////////////////////////////////////////////////////////////
+
+
+
+        sharedPref = getDefaultSharedPreferences(getApplication());
+        sharedPref2 = getApplicationContext().getSharedPreferences("nyushuttlepref",Context.MODE_PRIVATE);
+
+        String newServer = sharedPref.getString("pref_server","http://high-voltage.hostoi.com");
         Log.w("new-server",newServer);
         host_name = newServer;
 
@@ -276,7 +290,7 @@ public class Landing extends Activity implements AdapterView.OnItemSelectedListe
                     }
 
             int route_count = 0;
-            String favorite_routes_for_today = sharedPref.getString(day_selected.substring(0,3), "");
+            String favorite_routes_for_today = sharedPref2.getString(day_selected.substring(0,3), "");
             Log.w("alex-log",favorite_routes_for_today);
             for (int i=0;i<d;i++)
             {

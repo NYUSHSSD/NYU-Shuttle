@@ -43,99 +43,143 @@ ADDED from AndroidManifest.xml:20:9
 	android:label
 		ADDED from AndroidManifest.xml:22:13
 	android:parentActivityName
+		ADDED from AndroidManifest.xml:24:13
+	android:configChanges
 		ADDED from AndroidManifest.xml:23:13
 	android:name
 		ADDED from AndroidManifest.xml:21:13
 activity#com.shanghai.nyushuttle.SettingsActivity
-ADDED from AndroidManifest.xml:25:9
+ADDED from AndroidManifest.xml:26:9
 	android:label
-		ADDED from AndroidManifest.xml:27:13
-	android:parentActivityName
 		ADDED from AndroidManifest.xml:28:13
-	android:name
-		ADDED from AndroidManifest.xml:26:13
-activity#com.shanghai.nyushuttle.Landing
-ADDED from AndroidManifest.xml:30:9
-	android:label
-		ADDED from AndroidManifest.xml:32:13
-	android:name
-		ADDED from AndroidManifest.xml:31:13
-intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:33:13
-action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:34:17
-	android:name
-		ADDED from AndroidManifest.xml:34:25
-category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:36:17
-	android:name
-		ADDED from AndroidManifest.xml:36:27
-activity#com.shanghai.nyushuttle.OneDayViewActivity
-ADDED from AndroidManifest.xml:39:9
-	android:label
-		ADDED from AndroidManifest.xml:41:13
 	android:parentActivityName
-		ADDED from AndroidManifest.xml:42:13
+		ADDED from AndroidManifest.xml:30:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:29:13
 	android:name
-		ADDED from AndroidManifest.xml:40:13
-meta-data#android.support.PARENT_ACTIVITY
-ADDED from AndroidManifest.xml:43:13
-	android:value
-		ADDED from AndroidManifest.xml:45:17
-	android:name
-		ADDED from AndroidManifest.xml:44:17
-activity#com.shanghai.nyushuttle.AddToScheduleActivity
-ADDED from AndroidManifest.xml:47:9
+		ADDED from AndroidManifest.xml:27:13
+activity#com.shanghai.nyushuttle.Landing
+ADDED from AndroidManifest.xml:32:9
 	android:label
-		ADDED from AndroidManifest.xml:49:13
-	android:noHistory
-		ADDED from AndroidManifest.xml:50:13
+		ADDED from AndroidManifest.xml:35:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:34:13
 	android:name
-		ADDED from AndroidManifest.xml:48:13
-activity#com.shanghai.nyushuttle.DetailsAndMapActivity
-ADDED from AndroidManifest.xml:52:9
+		ADDED from AndroidManifest.xml:33:13
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:36:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:37:17
+	android:name
+		ADDED from AndroidManifest.xml:37:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:39:17
+	android:name
+		ADDED from AndroidManifest.xml:39:27
+activity#com.shanghai.nyushuttle.OneDayViewActivity
+ADDED from AndroidManifest.xml:42:9
+	android:label
+		ADDED from AndroidManifest.xml:44:13
+	android:parentActivityName
+		ADDED from AndroidManifest.xml:46:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:45:13
+	android:name
+		ADDED from AndroidManifest.xml:43:13
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from AndroidManifest.xml:47:13
+	android:value
+		ADDED from AndroidManifest.xml:49:17
+	android:name
+		ADDED from AndroidManifest.xml:48:17
+activity#com.shanghai.nyushuttle.AddToScheduleActivity
+ADDED from AndroidManifest.xml:51:9
 	android:label
 		ADDED from AndroidManifest.xml:54:13
 	android:noHistory
 		ADDED from AndroidManifest.xml:55:13
-	android:name
+	android:configChanges
 		ADDED from AndroidManifest.xml:53:13
-service#com.baidu.location.f
-ADDED from AndroidManifest.xml:58:9
-	android:enabled
+	android:name
+		ADDED from AndroidManifest.xml:52:13
+activity#com.shanghai.nyushuttle.DetailsAndMapActivity
+ADDED from AndroidManifest.xml:57:9
+	android:label
 		ADDED from AndroidManifest.xml:60:13
-	android:process
+	android:noHistory
 		ADDED from AndroidManifest.xml:61:13
-	android:name
+	android:configChanges
 		ADDED from AndroidManifest.xml:59:13
+	android:name
+		ADDED from AndroidManifest.xml:58:13
+receiver#com.shanghai.nyushuttle.AlarmBootReceiver
+ADDED from AndroidManifest.xml:64:9
+	android:enabled
+		ADDED from AndroidManifest.xml:65:13
+	android:name
+		ADDED from AndroidManifest.xml:64:19
+intent-filter#android.intent.action.BOOT_COMPLETED+android.intent.action.QUICKBOOT_POWERON
+ADDED from AndroidManifest.xml:66:13
+action#android.intent.action.BOOT_COMPLETED
+ADDED from AndroidManifest.xml:67:17
+	android:name
+		ADDED from AndroidManifest.xml:67:25
+action#android.intent.action.QUICKBOOT_POWERON
+ADDED from AndroidManifest.xml:68:17
+	android:name
+		ADDED from AndroidManifest.xml:68:25
+receiver#com.shanghai.nyushuttle.AlarmReceiver
+ADDED from AndroidManifest.xml:72:9
+	android:enabled
+		ADDED from AndroidManifest.xml:73:13
+	android:name
+		ADDED from AndroidManifest.xml:72:19
+intent-filter#Alarm
+ADDED from AndroidManifest.xml:74:13
+action#Alarm
+ADDED from AndroidManifest.xml:75:17
+	android:name
+		ADDED from AndroidManifest.xml:75:25
+service#com.baidu.location.f
+ADDED from AndroidManifest.xml:79:9
+	android:enabled
+		ADDED from AndroidManifest.xml:81:13
+	android:process
+		ADDED from AndroidManifest.xml:82:13
+	android:name
+		ADDED from AndroidManifest.xml:80:13
 uses-permission#android.permission.BAIDU_LOCATION_SERVICE
-ADDED from AndroidManifest.xml:68:5
+ADDED from AndroidManifest.xml:89:5
 	android:name
-		ADDED from AndroidManifest.xml:68:22
+		ADDED from AndroidManifest.xml:89:22
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from AndroidManifest.xml:70:5
+ADDED from AndroidManifest.xml:91:5
 	android:name
-		ADDED from AndroidManifest.xml:70:22
+		ADDED from AndroidManifest.xml:91:22
 uses-permission#android.permission.INTERNET
-ADDED from AndroidManifest.xml:72:5
+ADDED from AndroidManifest.xml:93:5
 	android:name
-		ADDED from AndroidManifest.xml:72:22
+		ADDED from AndroidManifest.xml:93:22
 uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from AndroidManifest.xml:74:5
+ADDED from AndroidManifest.xml:95:5
 	android:name
-		ADDED from AndroidManifest.xml:74:22
+		ADDED from AndroidManifest.xml:95:22
 uses-permission#android.permission.WRITE_SETTINGS
-ADDED from AndroidManifest.xml:76:5
+ADDED from AndroidManifest.xml:97:5
 	android:name
-		ADDED from AndroidManifest.xml:76:22
+		ADDED from AndroidManifest.xml:97:22
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from AndroidManifest.xml:78:5
+ADDED from AndroidManifest.xml:99:5
 	android:name
-		ADDED from AndroidManifest.xml:78:22
+		ADDED from AndroidManifest.xml:99:22
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from AndroidManifest.xml:80:5
+ADDED from AndroidManifest.xml:101:5
 	android:name
-		ADDED from AndroidManifest.xml:80:22
+		ADDED from AndroidManifest.xml:101:22
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from AndroidManifest.xml:103:5
+	android:name
+		ADDED from AndroidManifest.xml:103:22
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.github.traex.expandablelayout:library:1.2.2:7:5

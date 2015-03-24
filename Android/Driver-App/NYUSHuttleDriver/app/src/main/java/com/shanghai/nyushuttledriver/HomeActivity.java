@@ -1,6 +1,8 @@
 package com.shanghai.nyushuttledriver;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -51,6 +53,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.xml.datatype.Duration;
 
@@ -62,7 +65,7 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
     private LocationManager locationManager;
     public String selected_route = "none";
     public int route_started = 0;
-    public String self_defined_version = "drv1.14";
+    public String self_defined_version = "drv1.15";
     public static String backup_host_name = "http://nyushuttle.lixter.com";
     public static String host_name = "http://nyushuttle.lixter.com";
     public String AndroidDeviceId ="noID";
@@ -70,6 +73,12 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
     PowerManager.WakeLock wakeLock;
     LinearLayout ll1,ll2,ll3;
     TextView tv06;
+
+    AlarmManager alarmMgr;
+    PendingIntent alarmIntent;
+    Intent otherIntent;
+    int important_unique_id = 0;
+    Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +169,7 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
     protected void onPause() {
         super.onPause();
         locationManager.removeUpdates(this);
+        Log.w("alex-log-pause","I did pause...");
     }
 
     public void startRoute(View view) {
@@ -168,7 +178,7 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
             powerManager = (PowerManager) getSystemService(POWER_SERVICE);
             wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
                     "alexWakelock");
-            wakeLock.acquire();
+         //   wakeLock.acquire();
             new UpdateLogs(this).execute("started", selected_route, AndroidDeviceId, "01");
             route_started = 1;
             ll1.setBackgroundColor(Color.parseColor("#ff57068c"));
@@ -177,6 +187,25 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
 
             tv06.setText(R.string.started);
             Toast.makeText(this,R.string.started,Toast.LENGTH_LONG).show();
+
+
+
+            alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+            otherIntent = new Intent(this.getApplicationContext(), AlarmReceiver.class);
+            otherIntent.putExtra("route",selected_route);
+            alarmIntent = PendingIntent.getBroadcast(this.getApplicationContext(), important_unique_id, otherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    3 * 1000, alarmIntent);
+
+
+
+
+
+
         }
         else
         {
@@ -192,8 +221,9 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
         ll3.setBackgroundColor(Color.parseColor("#d11255"));
         tv06.setText(R.string.stopped);
         Toast.makeText(this,R.string.stopped,Toast.LENGTH_LONG).show();
-        if (wakeLock.isHeld())
-            wakeLock.release();
+   //     if (wakeLock.isHeld())
+     //       wakeLock.release();
+        alarmMgr.cancel(alarmIntent);
     }
 
 
@@ -365,10 +395,10 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
         latituteField.setText(String.valueOf(lat));
         longitudeField.setText(String.valueOf(lng));
 
-        if (!selected_route.contains("none") && route_started == 1) {
+     /*   if (!selected_route.contains("none") && route_started == 1) {
             new UpdateLocation(this).execute(selected_route, String.valueOf(lat), String.valueOf(lng));
             Log.w("alex-log","Executing |" + selected_route + "|");
-        }
+        }*/
     }
 
 

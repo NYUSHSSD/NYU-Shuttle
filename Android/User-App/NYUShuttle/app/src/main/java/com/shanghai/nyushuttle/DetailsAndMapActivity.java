@@ -260,8 +260,9 @@ public class DetailsAndMapActivity extends Activity {
             my_points.add(ll19);
             my_points.add(ll20);
 
-            OverlayOptions ooA = new MarkerOptions().position(ll0).icon(bdMapMarker);
+            OverlayOptions ooA = new MarkerOptions().position(ll0).icon(bdMapMarker).title("Grand Pujian");
             mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
+            
             OverlayOptions ooB = new MarkerOptions().position(ll20).icon(bdMapMarker);
             mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
             ooC = new MarkerOptions().position(llBus).icon(bdBus);

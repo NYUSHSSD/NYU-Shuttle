@@ -7,7 +7,7 @@
             android:key="pref_server"
             android:title="Server"
             android:summary="Try a different update server"
-            android:defaultValue="http://nyushuttle.lixter.com" />
+            android:defaultValue="http://high-voltage.hostoi.com" />
     </PreferenceCategory>
 
 </PreferenceScreen>

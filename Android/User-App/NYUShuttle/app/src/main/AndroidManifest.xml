@@ -20,15 +20,18 @@
         <activity
             android:name=".RouteListActivity"
             android:label="@string/title_activity_routelist"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:parentActivityName=".Landing" >
         </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/action_settings"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:parentActivityName=".Landing" >
         </activity>
         <activity
             android:name=".Landing"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_landing" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,6 +42,7 @@
         <activity
             android:name=".OneDayViewActivity"
             android:label="@string/title_activity_one_day_view"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:parentActivityName=".Landing" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -46,14 +50,31 @@
         </activity>
         <activity
             android:name=".AddToScheduleActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_add_to_schedule"
             android:noHistory="true">
         </activity>
         <activity
             android:name=".DetailsAndMapActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_details_and_map_activity"
             android:noHistory="true">
         </activity>
+
+        <receiver android:name="com.shanghai.nyushuttle.AlarmBootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.shanghai.nyushuttle.AlarmReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="Alarm" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name="com.baidu.location.f"
@@ -78,5 +99,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
 
 </manifest>
