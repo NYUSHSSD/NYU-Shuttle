@@ -282,7 +282,7 @@ int x;
 
                     //REMOVE ALARM!
                     alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-                    otherIntent = new Intent(this, Landing.class);
+                    otherIntent = new Intent(this, SplashActivity.class);
                     important_unique_id = ((int)route_name.charAt(0)) * 1000 + ((int)route_name.charAt(2)) * 100 + ((int)route_name.charAt(3)) * 10 + i;
                     alarmIntent = PendingIntent.getBroadcast(this, important_unique_id, otherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -316,7 +316,7 @@ int x;
                 editor.apply();
 //remove alarm
                 alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-                otherIntent = new Intent(this, Landing.class);
+                otherIntent = new Intent(this, SplashActivity.class);
                 important_unique_id = ((int)route_name.charAt(0)) * 1000 + ((int)route_name.charAt(2)) * 100 + ((int)route_name.charAt(3)) * 10 + i;
                 alarmIntent = PendingIntent.getBroadcast(this, important_unique_id, otherIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

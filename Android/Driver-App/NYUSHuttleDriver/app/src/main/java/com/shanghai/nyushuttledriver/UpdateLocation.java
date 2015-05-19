@@ -13,16 +13,23 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 
 public class UpdateLocation  extends AsyncTask<String,Void,String>{
-    private Context context;
+    private Context ctx;
+    public SharedPreferences sharedPref;
+    public String host_name,api_dir,update_location_script;
     public UpdateLocation(Context context) {
-        this.context = context;
+        this.ctx = context;
     }
 
     protected void onPreExecute(){
@@ -35,7 +42,17 @@ public class UpdateLocation  extends AsyncTask<String,Void,String>{
                 String latitude = (String) arg0[1];
                 String longitude = (String) arg0[2];
 
-                String link = HomeActivity.host_name + "/shuttle/driver_update_location.php?route="
+      //          sharedPref = getDefaultSharedPreferences(((Activity)ctx).getApplication());
+      //          host_name = sharedPref.getString("host_name",Config.bk_host_name);
+      //          api_dir = sharedPref.getString("api_dir",Config.bk_api_dir);
+      //          update_location_script = sharedPref.getString("update_location_script",Config.bk_update_location_script);
+    //TODO: get Activity context so we can get Preferences
+
+                host_name = Config.bk_host_name;
+                api_dir = Config.bk_api_dir;
+                update_location_script = Config.bk_update_location_script;
+
+                String link = host_name + api_dir + update_location_script + "?route="
                         +route+"&latitude="+latitude+"&longitude="+longitude;
                 URL url = new URL(link);
                 HttpClient client = new DefaultHttpClient();

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_version">0.00</string>
     <string name="app_name">NYU SHuttle</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -11,5 +12,6 @@
     <string name="title_activity_spinner">SpinnerActivity</string>
     <string name="title_activity_custom_loading_dialog">Loading</string>
     <string name="title_activity_details_and_map_activity">Details and Map</string>
+    <string name="title_activity_splash">NYU SHuttle</string>
 
 </resources>

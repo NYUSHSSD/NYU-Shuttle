@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -37,6 +38,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 
 public class OneDayViewActivity extends Activity implements AdapterView.OnItemSelectedListener{
 
@@ -49,11 +52,19 @@ public class OneDayViewActivity extends Activity implements AdapterView.OnItemSe
     String[] odvText_array = {"Schedule for:", "Schedule for:", "Schedule for:", "Schedule for:", "Schedule for:", "Schedule for:", "Schedule for:", "Schedule for:"};
     //String landing_text = "";
     public String day_selected = "";
+    public SharedPreferences sharedPref;
+    public String host_name,api_dir,apk_dir,get_version_script,get_all_routes_script,update_file_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_one_day_view);
+
+        sharedPref = getDefaultSharedPreferences(getApplication());
+        host_name = sharedPref.getString("host_name",Config.bk_host_name);
+        api_dir = sharedPref.getString("api_dir",Config.bk_api_dir);
+        get_all_routes_script = sharedPref.getString("get_all_routes_script",Config.bk_get_all_routes_script);
+
         Calendar calendar = Calendar.getInstance();
         current_weekday = calendar.get(Calendar.DAY_OF_WEEK);
         current_dayofm = calendar.get(Calendar.DAY_OF_MONTH);
@@ -251,7 +262,7 @@ public class OneDayViewActivity extends Activity implements AdapterView.OnItemSe
 
         URL url = null;
         try {
-            url = new URL(Landing.host_name + "/shuttle/select_all.php");
+            url = new URL(host_name + api_dir + get_all_routes_script);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

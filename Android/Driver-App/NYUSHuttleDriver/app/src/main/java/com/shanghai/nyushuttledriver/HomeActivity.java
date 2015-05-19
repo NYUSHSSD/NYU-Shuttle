@@ -3,14 +3,10 @@ package com.shanghai.nyushuttledriver;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -55,23 +51,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import javax.xml.datatype.Duration;
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 
-public class HomeActivity extends Activity implements LocationListener,AdapterView.OnItemSelectedListener {
-    private TextView latituteField;
-    private TextView longitudeField;
-    private String provider;
+public class HomeActivity extends Activity implements AdapterView.OnItemSelectedListener {
+
+    public String[] list_of_routes = {"none","A","BC"};
+    public SharedPreferences sharedPref;
+    public String host_name,api_dir;
     private LocationManager locationManager;
     public String selected_route = "none";
     public int route_started = 0;
-    public String self_defined_version = "drv1.15";
-    public static String backup_host_name = "http://nyushuttle.lixter.com";
-    public static String host_name = "http://nyushuttle.lixter.com";
     public String AndroidDeviceId ="noID";
-    PowerManager powerManager;
-    PowerManager.WakeLock wakeLock;
-    LinearLayout ll1,ll2,ll3;
+    LinearLayout ll3;
+    Spinner spin1;
     TextView tv06;
 
     AlarmManager alarmMgr;
@@ -86,30 +79,28 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
         setContentView(R.layout.activity_home);
 
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String newServer = sharedPref.getString("pref_server","http://nyushuttle.lixter.com");
-        Log.w("new-server",newServer);
-        host_name = newServer;
+        sharedPref = getDefaultSharedPreferences(getApplication());
+        host_name = sharedPref.getString("host_name",Config.bk_host_name);
+        api_dir = sharedPref.getString("api_dir",Config.bk_api_dir);
 
-        URL url = null;
-        try {
-            url = new URL(host_name + "/shuttle/get_version.php");
-        } catch (MalformedURLException e) {
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("pref_server", backup_host_name);
-            editor.commit();
-            super.finish();
-        }
-
-        if (internetConnected())
-            new getVersionFromDB(this).execute(url);
-        else
+        int route_already_started = sharedPref.getInt("route_started",0);
+   //     int route_already_chosen = sharedPref.getInt("route_already_chosen",0);
+    //    Log.w("alex-log-route-chosen",route_already_chosen + "");
+        if (route_already_started == 1)
         {
-            Toast.makeText(this,R.string.no_internet,Toast.LENGTH_LONG).show();
-            super.finish();
+            route_started = 1;
+            ll3 = (LinearLayout) findViewById(R.id.linearLayout3);
+            tv06 = (TextView) findViewById(R.id.TextView06);
+            spin1 = (Spinner) findViewById(R.id.spinner);
+            ll3.setBackgroundColor(Color.parseColor("#ff57068c"));
+            spin1.setBackgroundColor(Color.parseColor("#ff57068c"));
+            spin1.setEnabled(false);
+       //     spin1.setSelection(route_already_chosen);
+       //     selected_route = list_of_routes[route_already_chosen];
+            tv06.setText(R.string.started);
+            Toast.makeText(this,R.string.started,Toast.LENGTH_LONG).show();
         }
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         final TelephonyManager mTelephony = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         if (mTelephony.getDeviceId() != null){
@@ -140,56 +131,34 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         }
-
-        latituteField = (TextView) findViewById(R.id.TextView02);
-        longitudeField = (TextView) findViewById(R.id.TextView04);
-
-
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, true);
-        Location location = locationManager.getLastKnownLocation(provider);
-
-        // Initialize the location fields
-        if (location != null) {
-            System.out.println("Provider " + provider + " has been selected.");
-            onLocationChanged(location);
-        } else {
-            latituteField.setText(R.string.location_not_av);
-            longitudeField.setText(R.string.location_not_av);
-        }
-        ll1 = (LinearLayout) findViewById(R.id.linearLayout1);
-        ll2 = (LinearLayout) findViewById(R.id.linearLayout2);
         ll3 = (LinearLayout) findViewById(R.id.linearLayout3);
         tv06 = (TextView) findViewById(R.id.TextView06);
+        spin1 = (Spinner) findViewById(R.id.spinner);
     }
     protected void onResume() {
         super.onResume();
-        locationManager.requestLocationUpdates(provider, 400, 1, this);
     }
     protected void onPause() {
         super.onPause();
-        locationManager.removeUpdates(this);
-        Log.w("alex-log-pause","I did pause...");
     }
 
     public void startRoute(View view) {
-        if (!selected_route.contains("none"))
+        if (!selected_route.contains("none") && route_started == 0)
         {
-            powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-            wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                    "alexWakelock");
-         //   wakeLock.acquire();
             new UpdateLogs(this).execute("started", selected_route, AndroidDeviceId, "01");
             route_started = 1;
-            ll1.setBackgroundColor(Color.parseColor("#ff57068c"));
-            ll2.setBackgroundColor(Color.parseColor("#ff57068c"));
             ll3.setBackgroundColor(Color.parseColor("#ff57068c"));
-
+            spin1.setBackgroundColor(Color.parseColor("#ff57068c"));
+            spin1.setEnabled(false);
             tv06.setText(R.string.started);
             Toast.makeText(this,R.string.started,Toast.LENGTH_LONG).show();
 
-
-
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("route_started", 1);
+            editor.putInt("route_already_chosen",spin1.getSelectedItemPosition());
+            editor.commit();
+Log.w("alex-log","a1");
             alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
             otherIntent = new Intent(this.getApplicationContext(), AlarmReceiver.class);
             otherIntent.putExtra("route",selected_route);
@@ -199,13 +168,8 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
             calendar.setTimeInMillis(System.currentTimeMillis());
 
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    3 * 1000, alarmIntent);
-
-
-
-
-
-
+                    5 * 1000, alarmIntent);
+            Log.w("alex-log","a2");
         }
         else
         {
@@ -214,213 +178,38 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
     }
 
     public void finishRoute(View view) {
-        new UpdateLogs(this).execute("stopped", selected_route, AndroidDeviceId, "01");
-        route_started = 0;
-        ll1.setBackgroundColor(Color.parseColor("#d11255"));
-        ll2.setBackgroundColor(Color.parseColor("#d11255"));
-        ll3.setBackgroundColor(Color.parseColor("#d11255"));
-        tv06.setText(R.string.stopped);
+        if (route_started == 1)
+        {
+            new UpdateLogs(this).execute("stopped", selected_route, AndroidDeviceId, "01");
+            route_started = 0;
+            ll3.setBackgroundColor(Color.parseColor("#d11255"));
+            spin1.setBackgroundColor(Color.parseColor("#d11255"));
+            tv06.setText(R.string.stopped);
+            spin1.setEnabled(true);
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("route_started", 0);
+            editor.putInt("route_already_chosen",0);
+            editor.commit();
+
+        }
+        try{
+            alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+            otherIntent = new Intent(this.getApplicationContext(), AlarmReceiver.class);
+            otherIntent.putExtra("route",selected_route);
+            alarmIntent = PendingIntent.getBroadcast(this.getApplicationContext(), important_unique_id, otherIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+   //         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+     //               5 * 1000 * 100000, alarmIntent);
+            alarmMgr.cancel(alarmIntent);}
+        catch(Exception e)
+        {
+
+        }
         Toast.makeText(this,R.string.stopped,Toast.LENGTH_LONG).show();
-   //     if (wakeLock.isHeld())
-     //       wakeLock.release();
-        alarmMgr.cancel(alarmIntent);
     }
 
-
-    private class SelfUpdate extends AsyncTask<String, Void, String> {
-
-        protected String doInBackground(String... bla) {
-            try {
-                //set the download URL, a url that points to a file on the internet
-                //this is the file to be downloaded
-                URL url = new URL(host_name + "/shuttle/update/nyushuttledriver_update.apk");
-
-                //create the new connection
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                //set up some things on the connection
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setDoOutput(true);
-
-                //and connect!
-                urlConnection.connect();
-
-                //set the path where we want to save the file
-                //in this case, going to save it on the root directory of the
-                //sd card.
-                File SDCardRoot = Environment.getExternalStorageDirectory();
-                //create a new file, specifying the path, and the filename
-                //which we want to save the file as.
-                File file = new File(SDCardRoot,"nyushuttledriver_update.apk");
-
-                //this will be used to write the downloaded data into the file we created
-                FileOutputStream fileOutput = new FileOutputStream(file);
-
-                //this will be used in reading the data from the internet
-                InputStream inputStream = urlConnection.getInputStream();
-
-
-
-                //create a buffer...
-                byte[] buffer = new byte[16384];
-                int bufferLength = 0; //used to store a temporary size of the buffer
-
-                //now, read through the input buffer and write the contents to the file
-                while ( (bufferLength = inputStream.read(buffer)) > 0 ) {
-                    //add the data in the buffer to the file in the file output stream (the file on the sd card
-                    fileOutput.write(buffer, 0, bufferLength);
-                    //add up the size so we know how much is downloaded
-                }
-                //close the output stream when done
-                fileOutput.close();
-
-//catch some possible errors...
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return "success";
-        }
-
-        protected void onPostExecute(String result) {
-            Log.w("successornot","|" + result + "|");
-            File SDCardRoot = Environment.getExternalStorageDirectory();
-            String apkfile = "file:///" + SDCardRoot.getAbsolutePath() + "/nyushuttledriver_update.apk";
-            Intent promptInstall = new Intent(Intent.ACTION_VIEW)
-                    .setDataAndType(Uri.parse(apkfile),
-                            "application/vnd.android.package-archive");
-            startActivity(promptInstall);
-        }
-    }
-
-
-
-    private class getVersionFromDB extends AsyncTask<URL, String, String> {
-
-
-
-        private getVersionFromDB(Context ctx) {
-
-        }
-
-
-        @Override
-        protected void onPreExecute(){
-            super.onPreExecute();
-
-        }
-
-
-
-
-        protected String doInBackground(URL... urls) {
-
-            // Here starts the connection to the database
-            ///////////////////////////////////////////////////////////////////////////////////////
-            JSONArray jArray = null;
-            String result = null;
-            StringBuilder sb = null;
-            InputStream is = null;
-            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
-            try{
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost(urls[0].toString());
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpclient.execute(httppost);
-                HttpEntity entity = response.getEntity();
-                is = entity.getContent();
-            }catch(Exception e){
-                //error_string +=e.toString();
-            }
-            //convert response to string
-            try{
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
-                sb = new StringBuilder();
-                sb.append(reader.readLine() + "\n");
-
-                String line="0";
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line + "\n");
-                }
-                is.close();
-                result=sb.toString();
-            }catch(Exception e){
-                //error_string +=e.toString();
-            }
-
-            return result;
-
-        }
-        protected void onProgressUpdate(Integer... progress) {
-            //Yet to code
-        }
-        protected void onPostExecute(String result) {
-            if (result==null)
-            {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("pref_server", backup_host_name);
-                editor.commit();
-                HomeActivity.this.finish();
-                Log.w("diee","here I die");
-            }
-            else if (result.contains(self_defined_version))
-            {
-                Toast.makeText(HomeActivity.this,R.string.up_to_date,Toast.LENGTH_LONG).show();
-            }
-            else {
-                Toast.makeText(HomeActivity.this, R.string.application_outdated, Toast.LENGTH_LONG).show();
-                new SelfUpdate().execute("up");
-            }
-
-        }
-    }
-
-
-    private boolean internetConnected()
-    {
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        double lat = (double) (location.getLatitude());
-        double lng = (double) (location.getLongitude());
-        latituteField.setText(String.valueOf(lat));
-        longitudeField.setText(String.valueOf(lng));
-
-     /*   if (!selected_route.contains("none") && route_started == 1) {
-            new UpdateLocation(this).execute(selected_route, String.valueOf(lat), String.valueOf(lng));
-            Log.w("alex-log","Executing |" + selected_route + "|");
-        }*/
-    }
-
-
-
-
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Toast.makeText(this, "Enabled new provider " + provider,
-                Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Disabled provider " + provider,
-                Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -446,22 +235,17 @@ public class HomeActivity extends Activity implements LocationListener,AdapterVi
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (position == 0) {
-                selected_route = "none";
-                Log.w("alex-log", "Selected none");
-            } else if (position == 1) {
-                selected_route = "A";
-                Log.w("alex-log", "Selected A");
-            } else if (position == 2) {
-                selected_route = "BC";
-                Log.w("alex-log", "Selected BC");
-       //     } else if (position == 2) {
-        //        selected_route = "B";
-        //        Log.w("alex-log", "Selected B");
-        //    } else if (position == 3) {
-        //        selected_route = "C";
-        //        Log.w("alex-log", "Selected C");
-            }
+        int old_pos = sharedPref.getInt("route_already_chosen",0);
+        spin1 = (Spinner) findViewById(R.id.spinner);
+        if (old_pos!=0)
+        {
+            selected_route = list_of_routes[old_pos];
+            spin1.setSelection(old_pos);
+        }
+        else {
+            selected_route = list_of_routes[position];
+        }
+
         //TODO: What if the driver changes the route while driving?
     }
 

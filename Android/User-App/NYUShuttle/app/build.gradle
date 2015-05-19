@@ -7,8 +7,8 @@ android {
         applicationId 'com.shanghai.nyushuttle'
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 1
-        versionName '1.0'
+        versionCode 130
+        versionName '1.30'
     }
     buildTypes {
         release {
@@ -23,6 +23,8 @@ repositories {
     maven { url 'https://repo.commonsware.com.s3.amazonaws.com' }
 }
 dependencies {
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile fileTree(dir: 'libs', include: 'Parse-*.jar')
     compile fileTree(include: '*.jar', dir: 'libs')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.github.traex.expandablelayout:library:1.2.2'

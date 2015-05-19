@@ -10,70 +10,10 @@
        android:id="@+id/spinner"
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
-       android:background="#ff57068c"
+       android:background="#d11255"
        android:layout_gravity="center"
        android:textAlignment="center"
        />
-
-
-
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#d11255">
-        <TextView
-            android:id="@+id/TextView01"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:text="@string/latitude"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:textColor="#ffffffff"
-            android:paddingLeft="10dp" >
-        </TextView>
-
-        <TextView
-            android:id="@+id/TextView02"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:text="-"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:textColor="#ffffffff"
-            android:paddingLeft="10dp">
-        </TextView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#d11255">
-
-        <TextView
-            android:id="@+id/TextView03"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:text="@string/longitude"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:textColor="#ffffffff"
-            android:paddingLeft="10dp">
-        </TextView>
-
-        <TextView
-            android:id="@+id/TextView04"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:text="-"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:textColor="#ffffffff"
-            android:paddingLeft="10dp" >
-        </TextView>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout3"

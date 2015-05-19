@@ -3,46 +3,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.shanghai.nyushuttle" >
 
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="com.shanghai.nyushuttle.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.shanghai.nyushuttle.permission.C2D_MESSAGE" />
 
     <application
+        android:name=".APP_BOOT"
         android:allowBackup="true"
         android:icon="@drawable/ic_logo_bus_2"
         android:label="@string/app_name"
         android:logo="@drawable/ic_logo_bus_2"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon">
-
+        tools:replace="android:icon" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Kmz32d67l3FBmqAGpUstnGxg" />
 
-
         <activity
             android:name=".RouteListActivity"
-            android:label="@string/title_activity_routelist"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_routelist"
             android:parentActivityName=".Landing" >
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/action_settings"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/action_settings"
             android:parentActivityName=".Landing" >
         </activity>
         <activity
             android:name=".Landing"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_landing" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".OneDayViewActivity"
-            android:label="@string/title_activity_one_day_view"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/title_activity_one_day_view"
             android:parentActivityName=".Landing" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -52,25 +64,26 @@
             android:name=".AddToScheduleActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_add_to_schedule"
-            android:noHistory="true">
+            android:noHistory="true" >
         </activity>
         <activity
             android:name=".DetailsAndMapActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_details_and_map_activity"
-            android:noHistory="true">
+            android:noHistory="true" >
         </activity>
 
-        <receiver android:name="com.shanghai.nyushuttle.AlarmBootReceiver"
-            android:enabled="true">
+        <receiver
+            android:name=".AlarmBootReceiver"
+            android:enabled="true" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name="com.shanghai.nyushuttle.AlarmReceiver"
-            android:enabled="true">
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true" >
             <intent-filter>
                 <action android:name="Alarm" />
             </intent-filter>
@@ -81,26 +94,44 @@
             android:enabled="true"
             android:process=":remote" >
         </service>
+        <service android:name="com.parse.PushService" />
 
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.shanghai.nyushuttle" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
-
-
-
-    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE"/>
-
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-
-
 </manifest>

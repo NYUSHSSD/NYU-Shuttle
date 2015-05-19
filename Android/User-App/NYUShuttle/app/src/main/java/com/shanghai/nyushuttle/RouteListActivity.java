@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -32,19 +33,28 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 
 public class RouteListActivity extends Activity {
 
     public final static String ROUTE_DETAIL = "com.shanghai.nyushuttle.ROUTE_DETAIL";
     public final static String SCHEDULE_DETAIL = "com.shanghai.nyushuttle.SCHEDULE_DETAIL";
+    public SharedPreferences sharedPref;
+    public String host_name,api_dir,apk_dir,get_version_script,get_all_routes_script,update_file_name;
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routelist);
 
+         sharedPref = getDefaultSharedPreferences(getApplication());
+         host_name = sharedPref.getString("host_name",Config.bk_host_name);
+         api_dir = sharedPref.getString("api_dir",Config.bk_api_dir);
+         get_all_routes_script = sharedPref.getString("get_all_routes_script",Config.bk_get_all_routes_script);
+
          URL url = null;
          try {
-             url = new URL(Landing.host_name + "/shuttle/select_all.php");
+             url = new URL(host_name + api_dir + get_all_routes_script);
          } catch (MalformedURLException e) {
              e.printStackTrace();
          }

@@ -4,10 +4,10 @@
         android:title="Developer/Beta Tester Settings"
         android:key="dev_beta_settings">
     <EditTextPreference
-        android:key="pref_server"
+        android:key="host_name"
         android:title="Server"
         android:summary="Try a different update server"
-        android:defaultValue="http://nyushuttle.lixter.com" />
+        android:defaultValue="http://nyushuttle.ddns.net" />
     </PreferenceCategory>
 
 </PreferenceScreen>

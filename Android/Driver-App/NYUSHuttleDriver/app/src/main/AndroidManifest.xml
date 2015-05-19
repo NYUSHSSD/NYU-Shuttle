@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".APP_BOOT"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -18,24 +19,28 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/action_settings" >
+        </activity>
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/action_settings" >
-        </activity>
-
-        <receiver android:name="com.shanghai.nyushuttledriver.AlarmReceiver"
-            android:enabled="true">
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true" >
             <intent-filter>
                 <action android:name="Alarm" />
             </intent-filter>
         </receiver>
-
     </application>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>

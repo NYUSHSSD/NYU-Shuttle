@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -48,6 +49,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 
 public class DetailsAndMapActivity extends Activity {
 
@@ -74,6 +77,8 @@ public class DetailsAndMapActivity extends Activity {
 
     public getBusLocationFromDB getLocTask= new getBusLocationFromDB(DetailsAndMapActivity.this);
 
+    SharedPreferences sharedPref;
+    String host_name,api_dir,get_bus_location_script;
 
     public double transformLon (double x, double y)
     {
@@ -138,9 +143,14 @@ public class DetailsAndMapActivity extends Activity {
         bdStudent = BitmapDescriptorFactory
                 .fromResource(R.drawable.flower_logo);
 
+        sharedPref = getDefaultSharedPreferences(getApplication());
+        host_name = sharedPref.getString("host_name",Config.bk_host_name);
+        api_dir = sharedPref.getString("api_dir",Config.bk_api_dir);
+        get_bus_location_script = sharedPref.getString("get_bus_location_script",Config.bk_get_bus_location_script);
+
 
         try {
-            url = new URL(Landing.host_name + "/shuttle/get_bus_location.php");
+            url = new URL(host_name + api_dir + get_bus_location_script);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
