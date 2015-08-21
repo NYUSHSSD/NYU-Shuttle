@@ -50,7 +50,11 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        echo "<tr><td>".$row["status"]."</td><td>".$row["route"]."</td><td>".$row["name"]."</td><td>".$row["bus"]."</td><td>".$row["time"]."</td></tr>";
+        echo "<tr><td>" . htmlspecialchars($row["status"])
+                ."</td><td>" . htmlspecialchars($row["route"])
+                ."</td><td>" . htmlspecialchars($row["name"])
+                ."</td><td>" . htmlspecialchars($row["bus"])
+                ."</td><td>" . htmlspecialchars($row["time"]) ."</td></tr>";
     }
 } else {
     echo ":(";

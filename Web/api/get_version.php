@@ -1,18 +1,13 @@
 <?php
-include "config.php";
-
-$con = mysql_connect($db_server,$db_user,$db_pass) or die("connection failed");
-	mysql_select_db($db_database,$con) or die("db selection failed");
-	 
-	$r=mysql_query("select * from version",$con);
-
-	$flag=array();
-
-	while($row=mysql_fetch_array($r))
-	{
-		$flag[]=$row;
-	}
-	 
-	print(json_encode($flag));
-	mysql_close($con);
+include 'db_helper.php';
+$sql = "SELECT * FROM version";
+$rst = db_helper::query($sql);
+$flag=array();
+if ($rst)
+{
+   foreach($rst as $row){
+       $flag[]=$row;
+   }
+}
+print(json_encode($flag));
 ?>

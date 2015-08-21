@@ -47,13 +47,13 @@ if (!mysqli_query($con,$sql)) {
   //echo "no record added";
   //die('Error: ' . mysqli_error($con));
   mysqli_close($con);
-  header('Location: http://nyushapp.comli.com/shuttle/error.htm');
+  header('Location: ' . $admin_root . 'error.htm');
 
 }
 else
 {
 // echo "1 record added";
 mysqli_close($con);
-header('Location: http://nyushapp.comli.com/shuttle/success.htm');
+header('Location: ' . $admin_root . 'success.htm');
 }
 ?>

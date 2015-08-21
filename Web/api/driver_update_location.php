@@ -1,23 +1,18 @@
 <?php
-include "config.php";
+include 'db_helper.php';
 
-// Create connection
-$con=mysqli_connect($db_server,$db_user,$db_pass,$db_database);
-
-if (mysqli_connect_errno($con))
-{
-   echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
-$route = mysqli_real_escape_string($con, $_GET['route']);
-$longitude = mysqli_real_escape_string($con, $_GET['longitude']);
-$latitude = mysqli_real_escape_string($con, $_GET['latitude']);
+$route = $_GET['route'];
+$longitude = $_GET['longitude'];
+$latitude =$_GET['latitude'];
 $created_at = date('Y-m-d H:i:s');
 
-$sql="INSERT INTO drivers_location (route, latitude, longitude, created_at) VALUES ('$route', '$latitude', '$longitude', '$created_at')";
-if (mysqli_query($con,$sql))
+$sql="INSERT INTO drivers_location (route, latitude, longitude, created_at) VALUES (?,?,?,?)";
+
+$rst = db_helper::query($sql , array($route,$latitude,$longitude,$created_at));
+   
+if (!is_null( $rst))
 {
    echo "OK";
 }
 
-mysqli_close($con);
 ?>

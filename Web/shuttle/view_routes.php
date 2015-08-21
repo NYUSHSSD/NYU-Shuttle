@@ -59,7 +59,17 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        echo "<tr><td>".$row["route"]."</td><td>".$row["going_from"]."</td><td>".$row["going_to"]."</td><td>".$row["departure"]."</td><td>".$row["arrival"]."</td><td>".$row["monday"]."</td><td>".$row["tuesday"]."</td><td>".$row["wednesday"]."</td><td>".$row["thursday"]."</td><td>".$row["friday"]."</td><td>".$row["saturday"]."</td>
+        echo "<tr><td>".htmlspecialchars($row["route"])
+                ."</td><td>".htmlspecialchars($row["going_from"])
+                ."</td><td>".htmlspecialchars($row["going_to"])
+                ."</td><td>".htmlspecialchars($row["departure"])
+                ."</td><td>".htmlspecialchars($row["arrival"])
+                ."</td><td>".htmlspecialchars($row["monday"])
+                ."</td><td>".htmlspecialchars($row["tuesday"])
+                ."</td><td>".htmlspecialchars($row["wednesday"])
+                ."</td><td>".htmlspecialchars($row["thursday"])
+                ."</td><td>".htmlspecialchars($row["friday"])
+                ."</td><td>".htmlspecialchars($row["saturday"])."</td>
 <td>".$row["sunday"]."</td></tr>";
     }
 } else {

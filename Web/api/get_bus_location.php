@@ -1,26 +1,20 @@
 <?php
+include 'db_helper.php';
 
-include "config.php";
-
-$con = mysql_connect($db_server,$db_user,$db_pass) or die("connection failed");
-
-mysql_select_db($db_database,$con) or die("db selection failed");
- 
-$sql = "
-    SELECT dl1.route,dl1.latitude,dl1.longitude FROM `drivers_location` dl1
-    LEFT JOIN `drivers_location` dl2 ON dl1.route=dl2.route AND dl1.created_at < dl2.created_at
-    WHERE dl2.id IS NULL
+$sql = " SELECT   dl1.route,dl1.latitude,dl1.longitude FROM
+ `drivers_location` dl1 WHERE  dl1.id IN (
+  SELECT MAX(id) FROM drivers_location  GROUP BY route ORDER BY id DESC 
+ )
 ";
-
-$r = mysql_query($sql, $con);
-
+$rst = db_helper::query($sql);
 $flag=array();
-
-while($row=mysql_fetch_array($r))
+if ($rst)
 {
-	$flag[]=$row;
+   foreach($rst as $row){
+       $flag[]=$row;
+   }
 }
- 
+
 print(json_encode($flag));
-mysql_close($con);
+//mysql_close($con);
 ?>

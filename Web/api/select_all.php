@@ -1,18 +1,16 @@
 <?php
-include "config.php";
+include 'db_helper.php';
 
-$con = mysql_connect($db_server,$db_user,$db_pass) or die("connection failed");
-	mysql_select_db($db_database,$con) or die("db selection failed");
-	 
-	$r=mysql_query("select * from schedule",$con);
-
+$sql = "select * from schedule";
+$rst = db_helper::query($sql);
 	$flag=array();
+if ($rst)
+{
+   foreach($rst as $row){
+       $flag[]=$row;
+   }
+}
 
-	while($row=mysql_fetch_array($r))
-	{
-		$flag[]=$row;
-	}
-	 
-	print(json_encode($flag));
-	mysql_close($con);
+print(json_encode($flag));
+
 ?>
