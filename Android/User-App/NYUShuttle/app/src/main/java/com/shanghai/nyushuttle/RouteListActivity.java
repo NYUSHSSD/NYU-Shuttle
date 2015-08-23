@@ -153,7 +153,6 @@ public class RouteListActivity extends Activity {
 
 
 
-
             String words[]=result.split("\":\"|\\\",\"");
             String route[] = new String[100];
             String going_from[] = new String[100];
@@ -221,7 +220,7 @@ public class RouteListActivity extends Activity {
             RoutesAdapter adapter = new RoutesAdapter(RouteListActivity.this, arrayOfRoutes);
             expandableLayoutListView.setAdapter(adapter);
 
-            progressDialog.hide();
+            progressDialog.dismiss();
         }
     }
 

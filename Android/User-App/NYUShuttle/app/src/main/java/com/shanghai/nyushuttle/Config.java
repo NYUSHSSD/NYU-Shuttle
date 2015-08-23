@@ -15,7 +15,7 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class Config {
 
-    public static String bk_host_name = "http://nyushuttle.ddns.net/";
+    public static String bk_host_name = "http://che.shanghai.nyu.edu/";
     public static String bk_api_dir = "api/";
     public static String bk_get_version_script = "get_version.php";
     public static String bk_apk_dir = "apks/";

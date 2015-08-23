@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion '21.1.1'
+    compileSdkVersion 22
+    buildToolsVersion '21.1.2'
     defaultConfig {
         applicationId 'com.shanghai.nyushuttle'
         minSdkVersion 15
-        targetSdkVersion 21
-        versionCode 130
-        versionName '1.30'
+        targetSdkVersion 22
+        versionCode 131
+        versionName '1.31'
     }
     buildTypes {
         release {
@@ -29,7 +29,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.github.traex.expandablelayout:library:1.2.2'
     compile 'com.commonsware.cwac:merge:1.0.2'
-    compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.android.support:support-v4:22.2.1'
     compile files('libs/baidumapapi_v3_2_0.jar')
     compile files('libs/locSDK_3.1.jar')
     compile files('libs/my_lib.jar')

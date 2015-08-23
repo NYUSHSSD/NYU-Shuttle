@@ -7,7 +7,7 @@
         android:key="host_name"
         android:title="Server"
         android:summary="Try a different update server"
-        android:defaultValue="http://nyushuttle.ddns.net" />
+        android:defaultValue="http://che.shanghai.nyu.edu/" />
     </PreferenceCategory>
 
 </PreferenceScreen>

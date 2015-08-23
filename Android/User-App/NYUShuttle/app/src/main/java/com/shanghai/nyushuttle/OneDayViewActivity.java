@@ -248,7 +248,7 @@ public class OneDayViewActivity extends Activity implements AdapterView.OnItemSe
 
             RoutesAdapter adapter = new RoutesAdapter(OneDayViewActivity.this, arrayOfRoutes);
             expandableLayoutListView.setAdapter(adapter);
-            progressDialog.hide();
+            progressDialog.dismiss();
         }
     }
 
