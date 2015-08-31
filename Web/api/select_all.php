@@ -10,7 +10,7 @@ if ($rst)
        $flag[]=$row;
    }
 }
-
+ header('Content-Type: application/json');  
 print(json_encode($flag));
 
 ?>
