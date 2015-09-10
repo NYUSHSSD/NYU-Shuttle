@@ -17,4 +17,6 @@ if ($rst) {
 
 
 header('Content-Type: application/json');  
+header("Access-Control-Allow-Origin: *");
+
 print(json_encode($routes));
